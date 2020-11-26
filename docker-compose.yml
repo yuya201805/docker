@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ./baukis_for_conoha:/baukis_for_conoha
+    ports:
+      - "3000:3000"
+    links:
+      - db
